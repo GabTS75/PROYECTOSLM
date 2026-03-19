@@ -1,0 +1,223 @@
+<html>
+<head>
+    <title>Contact Form</title>
+    <style>
+        /* ── Reset & base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            display: flex;                  /* Flexbox en el body */
+            align-items: center;            /* centra verticalmente */
+            justify-content: center;        /* centra horizontalmente */
+            background-color: #f4f1ec;
+            font-family: 'Georgia', serif;
+        }
+
+        /* ── Contenedor del formulario ── */
+        .contact-form {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.07), 0 16px 40px rgba(0,0,0,.10);
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .contact-form h2 {
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            letter-spacing: .02em;
+            border-bottom: 3px solid #c9a96e;
+            padding-bottom: .5rem;
+        }
+
+        /* ── Formulario con Flexbox vertical ── */
+        form {
+            display: flex;
+            flex-direction: column;         /* campos apilados verticalmente */
+            gap: 1rem;                      /* espaciado entre campos */
+        }
+
+        label {
+            font-size: .8rem;
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            color: #555;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: -4px;            /* acerca el label a su input */
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: .7rem .9rem;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: .95rem;
+            font-family: inherit;
+            color: #1a1a1a;
+            background: #fafafa;
+            transition: border-color .2s, box-shadow .2s;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #c9a96e;
+            box-shadow: 0 0 0 3px rgba(201,169,110,.18);
+            background: #fff;
+        }
+
+        /* Campo con error */
+        input.error, textarea.error {
+            border-color: #e05252;
+            box-shadow: 0 0 0 3px rgba(224,82,82,.15);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ── Botón ── */
+        button[type="submit"] {
+            margin-top: .5rem;
+            padding: .75rem;
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            letter-spacing: .05em;
+            cursor: pointer;
+            transition: background .2s, transform .15s, box-shadow .2s;
+        }
+
+        button[type="submit"]:hover {
+            background: #c9a96e;            /* efecto hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(201,169,110,.35);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* ── Mensajes de validación / éxito ── */
+        #form-message {
+            margin-top: 1rem;
+            font-size: .9rem;
+            font-family: 'Arial', sans-serif;
+            border-radius: 8px;
+        }
+
+        #form-message.success {
+            background: #edfaf3;
+            color: #1e7e4a;
+            border: 1.5px solid #6fcf97;
+            padding: .75rem 1rem;
+        }
+
+        #form-message.error-msg {
+            background: #fff0f0;
+            color: #c0392b;
+            border: 1.5px solid #e05252;
+            padding: .75rem 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form id="contact-form" novalidate>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here…"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="form-message"></div>
+    </div>
+
+    <script>
+        const form       = document.getElementById('contact-form');
+        const msgBox     = document.getElementById('form-message');
+        const nameInput  = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const msgInput   = document.getElementById('message');
+
+        /* Valida formato de correo con expresión regular */
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        /* Marca un campo como erróneo o correcto */
+        function setFieldState(field, hasError) {
+            field.classList.toggle('error', hasError);
+        }
+
+        /* Muestra un mensaje en el contenedor inferior */
+        function showMessage(text, type) {
+            msgBox.textContent = text;
+            msgBox.className   = type;   /* 'success' | 'error-msg' */
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();            /* evita recarga de página */
+
+            const name    = nameInput.value.trim();
+            const email   = emailInput.value.trim();
+            const message = msgInput.value.trim();
+
+            let errors = [];
+
+            /* ── Validaciones ── */
+            if (!name) {
+                setFieldState(nameInput, true);
+                errors.push('El nombre es obligatorio.');
+            } else {
+                setFieldState(nameInput, false);
+            }
+
+            if (!email) {
+                setFieldState(emailInput, true);
+                errors.push('El correo es obligatorio.');
+            } else if (!isValidEmail(email)) {
+                setFieldState(emailInput, true);
+                errors.push('El correo no tiene un formato válido.');
+            } else {
+                setFieldState(emailInput, false);
+            }
+
+            if (!message) {
+                setFieldState(msgInput, true);
+                errors.push('El mensaje es obligatorio.');
+            } else {
+                setFieldState(msgInput, false);
+            }
+
+            /* ── Resultado ── */
+            if (errors.length > 0) {
+                showMessage('⚠ ' + errors.join(' '), 'error-msg');
+            } else {
+                showMessage('✓ ¡Mensaje enviado correctamente!', 'success');
+                form.reset();
+                [nameInput, emailInput, msgInput].forEach(f => setFieldState(f, false));
+            }
+        });
+
+        /* Limpia el error de un campo al empezar a escribir */
+        [nameInput, emailInput, msgInput].forEach(field => {
+            field.addEventListener('input', () => setFieldState(field, false));
+        });
+    </script>
+</body>
+</html>

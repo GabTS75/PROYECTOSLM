@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarjeta de Perfil</title>
+    <style>
+        /* Estilos generales para el cuerpo (opcional, para centrar la tarjeta) */
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilos para la tarjeta */
+        .card {
+            background-color: white; /* Fondo blanco */
+            border-radius: 12px;     /* Bordes redondeados */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra externa */
+            text-align: center;      /* Texto centrado */
+            padding: 20px;           /* Espaciado interno */
+            width: 300px;            /* Ancho fijo de la tarjeta */
+        }
+
+        /* Estilos para el avatar */
+        .avatar {
+            width: 100px;            /* Tamaño de 100px */
+            height: 100px;
+            border-radius: 50%;      /* Imagen circular */
+            object-fit: cover;       /* Evita que la imagen se deforme */
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            margin: 10px 0 5px 0;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img class="avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Avatar">
+        <h2>Nombre del Usuario</h2>
+        <p>Desarrollador Web entusiasta, amante del diseño limpio y las experiencias de usuario intuitivas.</p>
+    </div>
+</body>
+</html>
