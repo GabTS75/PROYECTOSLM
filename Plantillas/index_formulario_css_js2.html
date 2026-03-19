@@ -168,3 +168,14 @@
     </script>
 </body>
 </html>
+
+<!--
+He usado Flexbox para el diseño y una lógica de JavaScript que intercepta el envío para que la página no se recargue.
+
+Detalles clave de la implementación:
+Flexbox en el Formulario: Al usar display: flex y flex-direction: column en el #contact-form, los elementos se apilan verticalmente de forma limpia. El gap: 15px evita tener que poner márgenes manuales a cada elemento.
+
+Validación Robusta: Aunque HTML5 tiene validación nativa (como required), el ejercicio pedía validación con JS. He añadido un regex para asegurar que el email tenga un formato @ real y un chequeo de campos vacíos mediante .trim() (para evitar que el usuario envíe solo espacios en blanco).
+
+Feedback Visual: El botón tiene una pequeña transición de color y un efecto de "hundimiento" (transform: scale(0.98)) al hacer clic, lo que le da una sensación muy profesional.
+-->
